@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samantha Scrogham | Professional Portfolio</title>
+    <style>
+        /* CSS Variables for Easy Customization */
+        :root {
+            --primary-dark: #0f2c59;    /* Deep Navy */
+            --primary-blue: #1d4ed8;    /* Corporate Blue */
+            --accent-blue: #e0f2fe;     /* Ice Blue tint */
+            --section-alt: #f0f7ff;     /* Subtle Blue background for alternating sections */
+            --text-dark: #1e293b;       /* Charcoal Black */
+            --text-muted: #64748b;      /* Slate Gray */
+            --bg-light: #f8fafc;        /* Off-white page baseline */
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header / Navigation */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid #e2e8f0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 2rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Full-Width Section Wrappers for Background Separation */
+        .section-wrapper {
+            width: 100%;
+            padding: 5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Alternating Background Colors */
+        .bg-white {
+            background-color: var(--white);
+        }
+
+        .bg-blue-tint {
+            background-color: var(--section-alt);
+        }
+
+        /* Inner Content Alignment Block */
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero / About Section Specifics */
+        .hero {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            padding-top: 2rem;
+        }
+
+        .hero-text h1 {
+            font-size: 2.75rem;
+            color: var(--primary-dark);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-bar {
+            font-size: 1rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-bar a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .contact-bar a:hover {
+            text-decoration: underline;
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background-color: #d0e7ff;
+        }
+
+        /* Sidebar Cards & BYU Logo Styling */
+        .hero-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hero-card {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .byu-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #002e5d; /* Official BYU Navy */
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .byu-logo-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 80px;
+        }
+
+        .sidebar-item {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .sidebar-value {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+        }
+
+        /* Resume Items (Education, Experience, Leadership) */
+        .resume-item {
+            margin-bottom: 2.5rem;
+        }
+
+        .resume-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .resume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .org-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .location-date {
+            text-align: right;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .role-title {
+            font-style: italic;
+            color: var(--primary-blue);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .bullet-list {
+            list-style-type: none;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .bullet-list li::before {
+            content: "▪";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+        }
+
+        /* Grid for Skills & Interests */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Pill cards look sharp on both white and blue backgrounds */
+        .pill {
+            background-color: var(--white);
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            .resume-header {
+                flex-direction: column;
+            }
+            .location-date {
+                text-align: left;
+                margin-top: 0.25rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                display: none; 
+            }
+            .section-wrapper {
+                padding: 3.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY NAVIGATION BAR -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">SAMANTHA SCROGHAM</a>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#leadership">Leadership</a>
+                <a href="#skills">Skills & Interests</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Adding padding-top to compensate for the fixed header height -->
+    <div style="padding-top: 3.5rem;"></div>
+
+    <!-- HERO / ABOUT SECTION (White Background) -->
+    <div id="about" class="section-wrapper bg-white">
+        <div class="section-container hero">
+            <div class="hero-text">
+                <h1>Hi, I'm Samantha Scrogham.</h1>
+                <div class="contact-bar">
+                    <a href="tel:6824364523">(682) 436-4523</a> &nbsp;|&nbsp; 
+                    <a href="mailto:samantharscrogham@gmail.com">samantharscrogham@gmail.com</a>
+                </div>
+                <p>I am an accounting student at BYU's Marriott School of Business tracking toward audit and advisory. I combine analytical rigor with an execution-focused mindset.</p>
+                <div class="cta-buttons">
+                    <a href="mailto:samantharscrogham@gmail.com" class="btn btn-primary">Contact Me</a>
+                    <a href="#experience" class="btn btn-secondary">View Experience</a>
+                </div>
+            </div>
+            
+            <div class="hero-sidebar">
+                <div class="byu-logo-container">
+                    <img src="https://identity.byu.edu/00000171-8935-df9c-a175-9d750c180000/byu-logo-white-small-png" alt="Brigham Young University Logo" onerror="this.style.display='none';">
+                </div>
+                <div class="hero-card">
+                    <div class="sidebar-item">
+                        <div class="sidebar-label">Education</div>
+                        <div class="sidebar-value">Brigham Young University</div>
+                    </div>
+                    <div class="sidebar-item">
+                        <div class="sidebar-label">Expected Graduation</div>
+                        <div class="sidebar-value">Accounting, Apr 2028</div>
+                    </div>
+                    <div class="sidebar-item">
+                        <div class="sidebar-label">Current Focus</div>
+                        <div class="sidebar-value">Public Accounting and Advisory</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDUCATION SECTION (Subtle Ice Blue Background) -->
+    <div id="education" class="section-wrapper bg-blue-tint">
+        <div class="section-container">
+            <h2 class="section-title">Education</h2>
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="org-name">Brigham Young University – Marriott School of Business</div>
+                    <div class="location-date">Provo, UT<br>Expected Apr 2028</div>
+                </div>
+                <div class="role-title">Pre-Business | GPA: 3.88/4.00</div>
+                <ul class="bullet-list">
+                    <li><strong>Academic Performance:</strong> ACT 30/36 (95th Percentile); Recipient of Merit-based half-tuition scholarship (Winter 2026).</li>
+                    <li><strong>Campus Involvement:</strong> Active member of the Management Consulting Association, Women in Finance, Finance Society, and Accounting Society.</li>
+                    <li><strong>Selective Cohorts:</strong> Participant in the Women in Consulting Mentorship Program, focusing on individualized management consulting interview preparation.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCE SECTION (White Background) -->
+    <div id="experience" class="section-wrapper bg-white">
+        <div class="section-container">
+            <h2 class="section-title">Professional Experience</h2>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="org-name">PF Holdings Corp</div>
+                    <div class="location-date">Fort Worth, TX<br>Summer 2026</div>
+                </div>
+                <div class="role-title">Corporate Intern</div>
+                <ul class="bullet-list">
+                    <li>Selected for upcoming corporate headquarters internship at a $2B annual revenue diversified oil field services provider.</li>
+                    <li>Rotational areas of focus include Treasury, Corporate Finance, and Accounting, alongside Legal and Human Resources operations.</li>
+                    <li>Partnering with cross-functional executive teams to deliver on core structural and operational procedural tasks.</li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="org-name">HomeGoods (TJX Companies)</div>
+                    <div class="location-date">Vernon Hills, IL<br>Feb – May 2023</div>
+                </div>
+                <div class="role-title">Sales Associate</div>
+                <ul class="bullet-list">
+                    <li>Engaged with over 110 customers daily, directly improving customer retention metrics and supporting retail revenue targets.</li>
+                    <li>Optimized product layout and inventory positioning across 10,000+ SKUs, successfully reducing customer search time by 30%.</li>
+                    <li>Managed POS terminal infrastructure with flawless accuracy across more than 500 transactions, auditing customer engagement spend.</li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="org-name">GoodGate</div>
+                    <div class="location-date">Libertyville, IL<br>Aug – Oct 2022</div>
+                </div>
+                <div class="role-title">Market Research Intern</div>
+                <ul class="bullet-list">
+                    <li>Executed comprehensive competitive analysis on 4 primary industry players, flagging key market risks and go-to-market opportunities.</li>
+                    <li>Synthesized highly unstructured qualitative data from over 20 separate industry sources into a clean, actionable data report for C-suite executives.</li>
+                    <li>Collaborated directly with startup senior leadership to optimize pricing structures and product positioning to guide GTM strategy.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEADERSHIP & SERVICE SECTION (Subtle Ice Blue Background) -->
+    <div id="leadership" class="section-wrapper bg-blue-tint">
+        <div class="section-container">
+            <h2 class="section-title">Leadership & Impact</h2>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="org-name">The Church of Jesus Christ of Latter-day Saints</div>
+                    <div class="location-date">Mesa, AZ<br>Jun 2024 – Nov 2025</div>
+                </div>
+                <div class="role-title">Volunteer Representative</div>
+                <ul class="bullet-list">
+                    <li>Designed and delivered 20+ specialized group trainings for 150 full-time volunteers to optimize daily field performance and operating efficiency.</li>
+                    <li>Coordinated logistics, safety compliance, housing allocations, and mental-health resources for the entire cohort of local volunteers.</li>
+                    <li>Screened over 200 under-resourced citizens at a local food bank, tracking data and dedicating over 30 hours of direct operational service.</li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="org-name">Community Action Services and Food Bank</div>
+                    <div class="location-date">Provo, UT<br>Jan – Apr 2024</div>
+                </div>
+                <div class="role-title">Volunteer</div>
+                <ul class="bullet-list">
+                    <li>Managed the secure logistics, packaging, and sorting of over $15,000 in food supplies distributed directly to low-income households.</li>
+                    <li>Re-engineered the inventory flow system within the pantry center, reducing the processing and wait time per customer visit by 20%.</li>
+                </ul>
+            </div>
+
+            <div class="resume-item">
+                <div class="resume-header">
+                    <div class="org-name">World Vision USA</div>
+                    <div class="location-date">Federal Way, WA<br>Jun 2021 – Jun 2023</div>
+                </div>
+                <div class="role-title">Youth Board Volunteer</div>
+                <ul class="bullet-list">
+                    <li>Spearheaded grassroots fundraising campaigns that successfully raised $9,600 dedicated to clean water infrastructure development in Zambia.</li>
+                    <li>Conducted pitch interviews with prospective high-net-worth donors to clearly synthesize organizational goals and expand capital support.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SKILLS & INTERESTS (White Background) -->
+    <div id="skills" class="section-wrapper bg-white">
+        <div class="section-container grid-2">
+            <div>
+                <h3 class="section-title" style="margin-bottom: 1rem;">Core Skills</h3>
+                <div class="pill-container">
+                    <div class="pill">Microsoft Excel (Advanced)</div>
+                    <div class="pill">PowerPoint</div>
+                    <div class="pill">Word</div>
+                    <div class="pill">Adobe Creative Cloud</div>
+                    <div class="pill">AI Research Models</div>
+                    <div class="pill">Market Analysis</div>
+                    <div class="pill">Financial Tracking</div>
+                </div>
+            </div>
+            <div>
+                <h3 class="section-title" style="margin-bottom: 1rem;">Honors & Interests</h3>
+                <div class="pill-container">
+                    <div class="pill">IHSA Dance State Finalist</div>
+                    <div class="pill">North Suburban Sportsmanship Award</div>
+                    <div class="pill">All-American Dance Award</div>
+                    <div class="pill">Weightlifting</div>
+                    <div class="pill">Golf</div>
+                    <div class="pill">Baking & Cooking</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEEP NAVY FOOTER -->
+    <footer>
+        <div class="section-container">
+            <p>&copy; 2026 Samantha Scrogham. All Rights Reserved. | Connected via <a href="https://linkedin.com">LinkedIn</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
