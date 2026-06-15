@@ -3,176 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links Arcade | 2D Mini-Golf Game</title>
+    <title>Pro Shop & Links Arcade</title>
     <style>
         :root {
-            --slate-blue: #0f2c59;
+            --slate-navy: #213248;
             --corporate-blue: #1d4ed8;
-            --fairway-green: #16a34a;
+            --golf-green: #16a34a;
+            --bg-light: #f8fafc;
             --white: #ffffff;
-            --charcoal: #1e293b;
+            --border: #cbd5e1;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background-color: #f1f5f9; 
-            color: var(--charcoal); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #334155;
             min-height: 100vh;
-            padding: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .game-wrapper {
-            background: var(--white);
+        .main-app-container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 1.5rem;
+            background: var(--bg-light);
             padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 820px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            max-width: 1200px;
             width: 100%;
         }
 
-        .game-header {
+        /* Pro Shop Column */
+        .pro-shop-panel {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        h1 { font-size: 1.5rem; color: var(--slate-blue); font-weight: 800; }
-        h1 span { color: var(--fairway-green); }
-
-        .stats-display {
-            display: flex;
-            gap: 1.5rem;
-            font-weight: 600;
-            font-size: 1.1rem;
+        .shop-header {
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 0.75rem;
+            text-align: center;
         }
-        .stat-val { color: var(--corporate-blue); }
+        .shop-header h2 { font-size: 1.3rem; color: var(--slate-navy); font-weight: 800; }
+        .budget-badge {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 0.25rem;
+            font-size: 0.9rem;
+            border: 1px solid #bbf7d0;
+        }
+
+        .club-config-card {
+            background: #fafafa;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+        .club-title { font-weight: 700; font-size: 0.95rem; color: var(--slate-navy); margin-bottom: 0.5rem; display: flex; justify-content: space-between;}
+        
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-bars { font-size: 0.75rem; color: #64748b; }
+        .bar-container { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.15rem; }
+        .bar { height: 6px; background: #e2e8f0; flex: 1; border-radius: 3px; overflow: hidden; }
+        .fill { height: 100%; background: var(--corporate-blue); }
+
+        /* Game Column */
+        .game-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .game-hud {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: var(--white);
+            padding: 0.75rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .hud-item h4 { font-size: 0.7rem; text-transform: uppercase; color: #64748b; }
+        .hud-item p { font-size: 1.25rem; font-weight: 800; color: var(--slate-navy); }
+
+        /* Bag Selector Bar */
+        .bag-inventory-selector {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--white);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .inventory-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            background: #f1f5f9;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .inventory-btn.active {
+            background: var(--slate-navy);
+            color: var(--white);
+            border-color: var(--slate-navy);
+        }
 
         canvas {
-            background-color: #22c55e;
-            border: 4px solid var(--slate-blue);
-            border-radius: 8px;
-            cursor: crosshair;
+            background-color: #15803d;
+            border: 5px solid var(--slate-navy);
+            border-radius: 12px;
             display: block;
-            margin: 0 auto;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.2);
+            cursor: crosshair;
             max-width: 100%;
         }
 
-        .controls-tip {
-            margin-top: 1rem;
-            font-size: 0.9rem;
+        .footer-tips {
+            font-size: 0.8rem;
             color: #64748b;
-            line-height: 1.4;
+            text-align: center;
         }
-
-        .btn-reset {
-            margin-top: 1rem;
-            padding: 0.6rem 1.2rem;
-            background-color: var(--slate-blue);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-reset:hover { background-color: var(--corporate-blue); }
     </style>
 </head>
 <body>
 
-<div class="game-wrapper">
-    <div class="game-header">
-        <h1>⛳ Links<span>Arcade</span></h1>
-        <div class="stats-display">
-            <div>Hole: <span id="ui-hole" class="stat-val">1</span> / 3</div>
-            <div>Strokes: <span id="ui-strokes" class="stat-val">0</span></div>
+<div class="main-app-container">
+    
+    <div class="pro-shop-panel">
+        <div class="shop-header">
+            <h2>Custom Bag Studio</h2>
+            <div class="budget-badge">Budget: $<span id="ui-budget">2500</span></div>
+        </div>
+
+        <div class="club-config-card">
+            <div class="club-title"><span>1. Driver</span> <span id="cost-driver" style="color: #16a34a;">$0</span></div>
+            <select id="select-driver" onchange="buildBag()">
+                <option value="base" data-cost="400" data-pow="70" data-acc="60">Standard Alloy Driver - $400</option>
+                <option value="titanium" data-cost="800" data-pow="95" data-acc="50">Beta-Titanium Matrix - $800</option>
+                <option value="carbon" data-cost="1100" data-pow="85" data-acc="85">Carbon Composite Stealth - $1100</option>
+            </select>
+            <div class="stat-bars">
+                <div>Power: <div class="bar"><div class="fill" id="bar-d-pow" style="width: 70%;"></div></div></div>
+                <div style="margin-top: 0.25rem;">Control Accuracy: <div class="bar"><div class="fill" id="bar-d-acc" style="width: 60%;"></div></div></div>
+            </div>
+        </div>
+
+        <div class="club-config-card">
+            <div class="club-title"><span>2. Iron Set</span> <span id="cost-irons" style="color: #16a34a;">$0</span></div>
+            <select id="select-irons" onchange="buildBag()">
+                <option value="cast" data-cost="500" data-pow="50" data-acc="55">Cast Cavity-Back Irons - $500</option>
+                <option value="forged" data-cost="900" data-pow="60" data-acc="85">Forged Carbon Steel Blades - $900</option>
+            </select>
+            <div class="stat-bars">
+                <div>Power: <div class="bar"><div class="fill" id="bar-i-pow" style="width: 50%;"></div></div></div>
+                <div style="margin-top: 0.25rem;">Control Accuracy: <div class="bar"><div class="fill" id="bar-i-acc" style="width: 55%;"></div></div></div>
+            </div>
+        </div>
+
+        <div class="club-config-card">
+            <div class="club-title"><span>3. Putter</span> <span id="cost-putter" style="color: #16a34a;">$0</span></div>
+            <select id="select-putter" onchange="buildBag()">
+                <option value="blade" data-cost="300" data-pow="20" data-acc="70">Classic Brass Blade - $300</option>
+                <option value="mallet" data-cost="500" data-pow="25" data-acc="95">High-MOI Mallet Putter - $500</option>
+            </select>
+            <div class="stat-bars">
+                <div>Power: <div class="bar"><div class="fill" id="bar-p-pow" style="width: 20%;"></div></div></div>
+                <div style="margin-top: 0.25rem;">Control Accuracy: <div class="bar"><div class="fill" id="bar-p-acc" style="width: 70%;"></div></div></div>
+            </div>
+        </div>
+        
+        <div id="shop-warning" style="color: #dc2626; font-size: 0.8rem; font-weight: 600; text-align: center; display: none;">
+            ⚠️ Over Budget! Downgrade components to play.
         </div>
     </div>
 
-    <canvas id="gameCanvas" width="800" height="500"></canvas>
+    <div class="game-panel">
+        <div class="game-hud">
+            <div class="hud-item"><h4>Current Hole</h4><p id="hud-hole">1 / 3</p></div>
+            <div class="hud-item"><h4>Hole Par</h4><p id="hud-par">4</p></div>
+            <div class="hud-item"><h4>Strokes Taken</h4><p id="hud-strokes">0</p></div>
+            <div class="hud-item"><h4>Active Club Stat</h4><p id="hud-club-power" style="color: var(--corporate-blue);">Power: 70%</p></div>
+        </div>
 
-    <button class="btn-reset" onclick="resetEntireGame()">Restart Course</button>
-    <div class="controls-tip">
-        <strong>How to Play:</strong> Click and drag backward from the white golf ball to aim your shot. The length of the line dictates power. Release the click to putt! Watch out for sand traps and water hazards.
+        <div class="bag-inventory-selector">
+            <button id="equip-driver" class="inventory-btn active" onclick="equipClub('driver')">🏌️ Driver (Long Game)</button>
+            <button id="equip-irons" class="inventory-btn" onclick="equipClub('irons')">🏌️ 7-Iron (Approach/Hazards)</button>
+            <button id="equip-putter" class="inventory-btn" onclick="equipClub('putter')">⛳ Putter (Green Only)</button>
+        </div>
+
+        <canvas id="golfBagCanvas" width="750" height="420"></canvas>
+        
+        <div class="footer-tips">
+            <strong>Gameplay Loop:</strong> Choose your club based on distance. Click and drag backwards from the ball to aim the directional arrow pointer line. Release click to strike.
+        </div>
     </div>
 </div>
 
 <script>
-    const canvas = document.getElementById('gameCanvas');
+    const canvas = document.getElementById('golfBagCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Game Core State Variables
-    let currentLevel = 1;
-    let totalStrokes = 0;
-    
-    // Physics Parameters
-    const ball = { x: 100, y: 250, vx: 0, vy: 0, radius: 8, friction: 0.985 };
-    const hole = { x: 700, y: 250, radius: 14 };
-    
+    // Live Equipment State Specs
+    let bagConfig = {
+        driver: { power: 70, accuracy: 60, cost: 400 },
+        irons: { power: 50, accuracy: 55, cost: 500 },
+        putter: { power: 20, accuracy: 70, cost: 300 }
+    };
+    let activeClub = 'driver';
+    let isBagValid = true;
+
+    // Game Physics Engine State 
+    let currentHoleIdx = 0;
+    let strokes = 0;
+    const ball = { x: 80, y: 210, vx: 0, vy: 0, radius: 6.5, friction: 0.98 };
+    const hole = { x: 660, y: 210, radius: 12 };
     let isDragging = false;
-    let mouseStart = { x: 0, y: 0 };
     let mouseCurrent = { x: 0, y: 0 };
 
-    // Hazard Object Maps
-    let obstacles = [];
-    let sandTraps = [];
-    let waterHazards = [];
+    // Hole Geometries Mapping Index
+    const levels = [
+        { par: 4, bx: 80, by: 210, hx: 660, hy: 210, obstacles: [{x: 350, y: 0, w: 40, h: 260}], sand: [], water: [] },
+        { par: 3, bx: 80, by: 100, hx: 680, hy: 320, obstacles: [], sand: [{x: 550, y: 260, w: 160, h: 130}], water: [{x: 280, y: 0, w: 100, h: 280}] },
+        { par: 5, bx: 80, by: 210, hx: 680, hy: 210, obstacles: [{x: 250, y: 150, w: 30, h: 270}, {x: 480, y: 0, w: 30, h: 270}], sand: [{x: 550, y: 140, w: 80, h: 140}], water: [] }
+    ];
 
-    function initLevel(level) {
-        ball.vx = 0;
-        ball.vy = 0;
-        isDragging = false;
-        
-        document.getElementById('ui-hole').textContent = level;
+    function buildBag() {
+        // Read values from select dropdowns dynamically
+        const dOpt = document.getElementById('select-driver').selectedOptions[0];
+        const iOpt = document.getElementById('select-irons').selectedOptions[0];
+        const pOpt = document.getElementById('select-putter').selectedOptions[0];
 
-        if (level === 1) {
-            ball.x = 100; ball.y = 250;
-            hole.x = 700; hole.y = 250;
-            obstacles = []; sandTraps = []; waterHazards = [];
-        } else if (level === 2) {
-            ball.x = 100; ball.y = 150;
-            hole.x = 700; hole.y = 350;
-            // Vertical structural walls
-            obstacles = [
-                { x: 400, y: 0, w: 40, h: 320 }
-            ];
-            sandTraps = [
-                { x: 200, y: 100, w: 120, h: 120 }
-            ];
-            waterHazards = [];
-        } else if (level === 3) {
-            ball.x = 100; ball.y = 250;
-            hole.x = 700; hole.y = 250;
-            obstacles = [];
-            sandTraps = [
-                { x: 500, y: 150, w: 100, h: 200 }
-            ];
-            waterHazards = [
-                { x: 320, y: 120, w: 80, h: 260 }
-            ];
+        bagConfig.driver = { power: parseInt(dOpt.dataset.pow), accuracy: parseInt(dOpt.dataset.acc), cost: parseInt(dOpt.dataset.cost) };
+        bagConfig.irons = { power: parseInt(iOpt.dataset.pow), accuracy: parseInt(iOpt.dataset.acc), cost: parseInt(iOpt.dataset.cost) };
+        bagConfig.putter = { power: parseInt(pOpt.dataset.pow), accuracy: parseInt(pOpt.dataset.acc), cost: parseInt(pOpt.dataset.cost) };
+
+        // Update UI Progress Bars
+        document.getElementById('bar-d-pow').style.width = bagConfig.driver.power + '%';
+        document.getElementById('bar-d-acc').style.width = bagConfig.driver.accuracy + '%';
+        document.getElementById('bar-i-pow').style.width = bagConfig.irons.power + '%';
+        document.getElementById('bar-i-acc').style.width = bagConfig.irons.accuracy + '%';
+        document.getElementById('bar-p-pow').style.width = bagConfig.putter.power + '%';
+        document.getElementById('bar-p-acc').style.width = bagConfig.putter.accuracy + '%';
+
+        // Budget Accounting Audit Block
+        const totalSpent = bagConfig.driver.cost + bagConfig.irons.cost + bagConfig.putter.cost;
+        const remaining = 2500 - totalSpent;
+        document.getElementById('ui-budget').textContent = remaining;
+
+        document.getElementById('cost-driver').textContent = `$${bagConfig.driver.cost}`;
+        document.getElementById('cost-irons').textContent = `$${bagConfig.irons.cost}`;
+        document.getElementById('cost-putter').textContent = `$${bagConfig.putter.cost}`;
+
+        if (remaining < 0) {
+            isBagValid = false;
+            document.getElementById('shop-warning').style.display = 'block';
+        } else {
+            isBagValid = true;
+            document.getElementById('shop-warning').style.display = 'none';
         }
+        equipClub(activeClub);
     }
 
-    // Input Mechanics
+    function equipClub(clubType) {
+        activeClub = clubType;
+        document.getElementById('equip-driver').classList.toggle('active', clubType === 'driver');
+        document.getElementById('equip-irons').classList.toggle('active', clubType === 'irons');
+        document.getElementById('equip-putter').classList.toggle('active', clubType === 'putter');
+
+        document.getElementById('hud-club-power').textContent = `Max Power: ${bagConfig[clubType].power}%`;
+    }
+
+    function initHole(idx) {
+        const lvl = levels[idx];
+        ball.x = lvl.bx; ball.y = lvl.by;
+        ball.vx = 0; ball.vy = 0;
+        hole.x = lvl.hx; hole.y = lvl.hy;
+        strokes = 0;
+        
+        document.getElementById('hud-hole').textContent = `${idx + 1} / 3`;
+        document.getElementById('hud-par').textContent = lvl.par;
+        document.getElementById('hud-strokes').textContent = strokes;
+    }
+
+    // Canvas Mouse Vector Aim Event Ingestion Loops
     canvas.addEventListener('mousedown', (e) => {
-        if (Math.abs(ball.vx) < 0.1 && Math.abs(ball.vy) < 0.1) {
-            const rect = canvas.getBoundingClientRect();
-            const mX = e.clientX - rect.left;
-            const mY = e.clientY - rect.top;
-            
-            // Allow click anywhere near the ball
-            if (Math.hypot(mX - ball.x, mY - ball.y) < 30) {
-                isDragging = true;
-                mouseStart = { x: ball.x, y: ball.y };
-                mouseCurrent = { x: mX, y: mY };
-            }
+        if (!isBagValid) return; // Prevent shooting if over budget
+        if (Math.hypot(ball.vx, ball.vy) > 0.15) return; // Must be at rest
+
+        const rect = canvas.getBoundingClientRect();
+        const mX = e.clientX - rect.left;
+        const mY = e.clientY - rect.top;
+
+        if (Math.hypot(mX - ball.x, mY - ball.y) < 30) {
+            isDragging = true;
+            mouseCurrent = { x: mX, y: mY };
         }
     });
 
@@ -186,160 +337,169 @@
     canvas.addEventListener('mouseup', () => {
         if (!isDragging) return;
         isDragging = false;
+
+        let dx = ball.x - mouseCurrent.x;
+        let dy = ball.y - mouseCurrent.y;
+        let pullDist = Math.hypot(dx, dy);
+
+        if (pullDist < 3) return;
+
+        // Apply Club Configuration Multipliers to Velocity Calculation
+        const clubMultiplier = bagConfig[activeClub].power / 100;
         
-        // Calculate shot vectors based on drag distance
-        const dx = ball.x - mouseCurrent.x;
-        const dy = ball.y - mouseCurrent.y;
-        
-        // Applying scalar factor to control speed metrics
-        ball.vx = dx * 0.12;
-        ball.vy = dy * 0.12;
-        
-        totalStrokes++;
-        document.getElementById('ui-strokes').textContent = totalStrokes;
+        // Drivers cannot putt effectively; Putters cannot drive long range
+        let powerScalar = 0.14 * clubMultiplier;
+        if (activeClub === 'putter' && pullDist > 60) pullDist = 60; // Putter ceiling cap
+
+        ball.vx = dx * powerScalar;
+        ball.vy = dy * powerScalar;
+
+        strokes++;
+        document.getElementById('hud-strokes').textContent = strokes;
     });
 
-    function updatePhysics() {
-        // Apply position progression step
+    function physicsTick() {
+        const lvl = levels[currentHoleIdx];
         ball.x += ball.vx;
         ball.y += ball.vy;
 
-        // Apply friction drag baseline
         let currentFriction = ball.friction;
 
-        // Sand Trap Interaction Check
-        sandTraps.forEach(trap => {
-            if (ball.x > trap.x && ball.x < trap.x + trap.w && ball.y > trap.y && ball.y < trap.y + trap.h) {
-                currentFriction = 0.82; // Significant dampening deceleration
+        // Check Sand Trap Drag Dampening Matrix
+        lvl.sand.forEach(s => {
+            if (ball.x > s.x && ball.x < s.x + s.w && ball.y > s.y && ball.y < s.y + s.h) {
+                currentFriction = 0.85; // Heavy deceleration drag
             }
         });
 
-        // Water Hazard Interaction Check
-        waterHazards.forEach(water => {
-            if (ball.x > water.x && ball.x < water.x + water.w && ball.y > water.y && ball.y < water.y + water.h) {
-                // Reset ball position on penalty
+        // Check Water Hazard Drop Execution Loop
+        lvl.water.forEach(w => {
+            if (ball.x > w.x && ball.x < w.x + w.w && ball.y > w.y && ball.y < w.y + w.h) {
                 ball.vx = 0; ball.vy = 0;
-                totalStrokes++;
-                document.getElementById('ui-strokes').textContent = totalStrokes;
-                initLevel(currentLevel);
-                alert("Water Hazard! +1 Penalty Stroke applied.");
+                ball.x = lvl.bx; ball.y = lvl.by; // Reset to Tee box
+                strokes++;
+                document.getElementById('hud-strokes').textContent = strokes;
+                alert("Water Hazard Drop! +1 Penalty stroke applied.");
             }
         });
 
         ball.vx *= currentFriction;
         ball.vy *= currentFriction;
 
-        // Outer Frame Bound Collisions
+        // Canvas Boundary Rebounds
         if (ball.x - ball.radius < 0) { ball.x = ball.radius; ball.vx *= -1; }
         if (ball.x + ball.radius > canvas.width) { ball.x = canvas.width - ball.radius; ball.vx *= -1; }
         if (ball.y - ball.radius < 0) { ball.y = ball.radius; ball.vy *= -1; }
         if (ball.y + ball.radius > canvas.height) { ball.y = canvas.height - ball.radius; ball.vy *= -1; }
 
-        // Rigid Obstacle Collision Check
-        obstacles.forEach(obs => {
-            if (ball.x + ball.radius > obs.x && ball.x - ball.radius < obs.x + obs.w &&
-                ball.y + ball.radius > obs.y && ball.y - ball.radius < obs.y + obs.h) {
+        // Hard Obstacle Rect Wall Vector Inversion Loops
+        lvl.obstacles.forEach(o => {
+            if (ball.x + ball.radius > o.x && ball.x - ball.radius < o.x + o.w &&
+                ball.y + ball.radius > o.y && ball.y - ball.radius < o.y + o.h) {
                 
-                // Determine collision face orientation
-                const distLeft = Math.abs((ball.x + ball.radius) - obs.x);
-                const distRight = Math.abs((ball.x - ball.radius) - (obs.x + obs.w));
-                const distTop = Math.abs((ball.y + ball.radius) - obs.y);
-                const distBottom = Math.abs((ball.y - ball.radius) - (obs.y + obs.h));
+                let dL = Math.abs((ball.x + ball.radius) - o.x);
+                let dR = Math.abs((ball.x - ball.radius) - (o.x + o.w));
+                let dT = Math.abs((ball.y + ball.radius) - o.y);
+                let dB = Math.abs((ball.y - ball.radius) - (o.y + o.h));
+                let min = Math.min(dL, dR, dT, dB);
 
-                const minDist = Math.min(distLeft, distRight, distTop, distBottom);
-
-                if (minDist === distLeft) { ball.x = obs.x - ball.radius; ball.vx *= -1; }
-                else if (minDist === distRight) { ball.x = obs.x + obs.w + ball.radius; ball.vx *= -1; }
-                else if (minDist === distTop) { ball.y = obs.y - ball.radius; ball.vy *= -1; }
-                else if (minDist === distBottom) { ball.y = obs.y + obs.h + ball.radius; ball.vy *= -1; }
+                if (min === dL) { ball.x = o.x - ball.radius; ball.vx *= -1; }
+                else if (min === dR) { ball.x = o.x + o.w + ball.radius; ball.vx *= -1; }
+                else if (min === dT) { ball.y = o.y - ball.radius; ball.vy *= -1; }
+                else if (min === dB) { ball.y = o.y + o.h + ball.radius; ball.vy *= -1; }
             }
         });
 
-        // Check if Ball Entered Hole
-        const distToHole = Math.hypot(ball.x - hole.x, ball.y - hole.y);
-        if (distToHole < hole.radius) {
-            // Speed must be low enough to fall into the cup
-            if (Math.hypot(ball.vx, ball.vy) < 3.5) {
-                ball.vx = 0; ball.vy = 0;
-                if (currentLevel < 3) {
-                    alert(`Hole ${currentLevel} Complete! Nice Putt.`);
-                    currentLevel++;
-                    initLevel(currentLevel);
-                } else {
-                    alert(`Congratulations! You finished the course in ${totalStrokes} total strokes.`);
-                    resetEntireGame();
-                }
+        // Intersection Cup Sink Conditions
+        const distToCup = Math.hypot(ball.x - hole.x, ball.y - hole.y);
+        if (distToCup < hole.radius && Math.hypot(ball.vx, ball.vy) < 2.5) {
+            ball.vx = 0; ball.vy = 0;
+            alert(`Hole Completed in ${strokes} strokes!`);
+            
+            if (currentHoleIdx < levels.length - 1) {
+                currentHoleIdx++;
+                initHole(currentHoleIndex = currentHoleIdx);
+            } else {
+                alert("Championship Complete! Returning to Hole 1.");
+                currentHoleIdx = 0;
+                initHole(0);
             }
         }
     }
 
-    function draw() {
-        // Render Fairway
+    function renderScene() {
+        // Render Green Turf Canvas Base
         ctx.fillStyle = '#22c55e';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw Sand Traps
+        const lvl = levels[currentHoleIdx];
+
+        // Draw Sand Trap Patches
         ctx.fillStyle = '#fef08a';
-        sandTraps.forEach(trap => ctx.fillRect(trap.x, trap.y, trap.w, trap.h));
+        lvl.sand.forEach(s => ctx.fillRect(s.x, s.y, s.w, s.h));
 
-        // Draw Water Hazards
+        // Draw Deep Water Channels
         ctx.fillStyle = '#38bdf8';
-        waterHazards.forEach(water => ctx.fillRect(water.x, water.y, water.w, water.h));
+        lvl.water.forEach(w => ctx.fillRect(w.x, w.y, w.w, w.h));
 
-        // Draw Structural Obstacles
+        // Draw Concrete Obstacle Block Layouts
         ctx.fillStyle = '#475569';
-        obstacles.forEach(obs => ctx.fillRect(obs.x, obs.y, obs.w, obs.h));
+        lvl.obstacles.forEach(o => ctx.fillRect(o.x, o.y, o.w, o.h));
 
-        // Draw Target Cup Hole
+        // Draw Hole Cup
         ctx.beginPath();
         ctx.arc(hole.x, hole.y, hole.radius, 0, Math.PI * 2);
         ctx.fillStyle = '#0f172a';
         ctx.fill();
         ctx.closePath();
 
-        // Draw Aiming Guide Vector Line
+        // Draw Aiming Guide Trajectory Trace Line
         if (isDragging) {
             ctx.beginPath();
             ctx.moveTo(ball.x, ball.y);
-            // Dynamic opposite aiming pull vector computation
             const targetX = ball.x + (ball.x - mouseCurrent.x);
             const targetY = ball.y + (ball.y - mouseCurrent.y);
             ctx.lineTo(targetX, targetY);
             ctx.strokeStyle = '#ef4444';
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2.5;
             ctx.setLineDash([4, 4]);
             ctx.stroke();
             ctx.setLineDash([]);
             ctx.closePath();
         }
 
-        // Draw Golf Ball
+        // Draw Golf Ball Asset
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = !isBagValid ? '#94a3b8' : '#ffffff';
         ctx.fill();
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.closePath();
+
+        // Display Operational Shop Intercept Lock Overlay
+        if (!isBagValid) {
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText('BAG OVER BUDGET: ADJUST LOADS IN STUDIO TO UNLOCK', canvas.width / 2, canvas.height / 2);
+        }
     }
 
-    function gameLoop() {
-        updatePhysics();
-        draw();
-        requestAnimationFrame(gameLoop);
+    function mainAppLoop() {
+        physicsTick();
+        renderScene();
+        requestAnimationFrame(mainAppLoop);
     }
 
-    function resetEntireGame() {
-        currentLevel = 1;
-        totalStrokes = 0;
-        document.getElementById('ui-strokes').textContent = totalStrokes;
-        initLevel(currentLevel);
-    }
-
-    // Start App Routine
-    initLevel(currentLevel);
-    gameLoop();
+    // Boot Routines
+    buildBag();
+    initHole(0);
+    mainAppLoop();
 </script>
+
 </body>
 </html>

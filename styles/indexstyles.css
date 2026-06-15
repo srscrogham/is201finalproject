@@ -1,3 +1,81 @@
+/* 1. Global Page Styles (Custom Background & Font Family) */
 body {
-    background-color:rgb(189, 236, 250)
+    background-color: #cddff0; /* Custom light slate-blue background color */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Custom font family */
+    color: #101f3a; /* Custom body font color */
+    margin: 40px auto;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+/* 2. Style Definition for Heading Fonts */
+h1, h2, h3 {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif , Gadget, sans-serif;
+    color: #1a365d; /* Dark navy font color */
+}
+
+/* 3. Style Definition for our 3 Content Blocks (Divs) */
+.content-box {
+    background-color: #ffffff;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 4. Style Definition for Interactive Elements & Links */
+.nav-link {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #2b6cb0;
+    text-decoration: underline;
+}
+
+.anchor-btn {
+    display: inline-block;
+    background-color: #319795;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* Helper styles for images and media */
+.text-center {
+    text-align: center;
+}
+
+.feature-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+
+.video-container {
+    margin: 20px 0;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+.note {
+    font-size: 0.9rem;
+    color: #718096;
 }
